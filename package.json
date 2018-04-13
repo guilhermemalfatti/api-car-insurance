@@ -1,0 +1,25 @@
+{
+  "name": "api-car-insurance",
+  "version": "1.0.0",
+  "description": "API Insurance Car",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:guilhermemalfatti/api-car-insurance.git"
+  },
+  "dependencies": {
+    "dotenv-extended": "^2.0.1",
+    "restify": "^7.1.1",
+    "restify-errors": "^6.0.0"
+  },
+  "author": "Guilherme Malfatti <guimalfatti76@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/guilhermemalfatti/api-car-insurance/issues"
+  },
+  "homepage": "https://github.com/guilhermemalfatti/api-car-insurance/blob/master/README.md"
+}
