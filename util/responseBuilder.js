@@ -2,11 +2,13 @@ var restifyErrors = require('restify-errors');
 
 module.exports.createResponse = function (response, status, httpStatus, body) {
     
-    console.trace('Sending response');
+    console.info('Sending response');
     response.header('Cache-Control', 'no-cache');
     response.header('Pragma', 'no-cache');
     response.header("StatusCode", status);
     response.send(httpStatus, body);
+    
+    console.info('response Sent');
 };
 
 

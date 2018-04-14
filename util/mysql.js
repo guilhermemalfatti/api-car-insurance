@@ -62,6 +62,25 @@ function runQuery(connection, queryString, post, callback){
     });
 }
 
+MySQL.prototype.updateTable = function updateTable(tableName, columnsAndValues, whereClause, callback){
+    var data = [];
+
+    for(var field in columnsAndValues){
+        data.push(this.escapeColumnValue(field, columnsAndValues[field]));
+    }
+
+    this.pool.getConnection(function (error, connection) {
+        if (error) {
+            logger.error(error);
+            callback && callback(error);
+        }
+        else {
+            var queryString = "UPDATE " + tableName + " SET " + data.join(',') + " WHERE " + whereClause;
+            runQuery(connection, queryString, null, callback);
+        }
+    });
+};
+
 //TODO
 //transactions, Delet, Update
 

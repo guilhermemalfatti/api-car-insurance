@@ -1,22 +1,21 @@
 var pjson = require('../package.json');
+var responseBuilder = require("../util/responseBuilder");
 
 module.exports.getVersion = function(req, res) {
     console.info('call controllers.system.getVersion');
     //TODO export a file with codes 200 ...
-    var http_status = 200;
 
-    res.send(http_status, {
+    var body  = {
         name: pjson.name,
         version: pjson.version
-    });
+    };
+
+    responseBuilder.createResponse(res, 200, 200, body);
 
 };
 
 exports.getHealthcheck = function(req, res, next) {
     console.info('call controllers.system.getHealthcheck');
-    //TODO
-    var http_status = 200;
-    res.send(http_status, {
-        status: 1
-    });
+
+    responseBuilder.createResponse(res, 200, 200, {staus: 1});
 };

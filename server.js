@@ -22,54 +22,22 @@ server.use(helmet());
 var controllersPath = './controllers/';
 var controllers = {
     version: require(controllersPath + 'system.js').getVersion,
-    healthcheck: require(controllersPath + 'system.js').getHealthcheck
+    healthcheck: require(controllersPath + 'system.js').getHealthcheck,
+    quote: require(controllersPath + 'quote.js')
 };
 
-/* var validatorsPath = './validators/';
+var validatorsPath = './validators/';
 var validators = {
-    body: require(validatorsPath + 'identity.js')
-}; */
+    body: require(validatorsPath + 'validate.js')
+};
 
 // todo
 //server.pre(...);
 
-// Requests configuration
-//server.post({path: '/message/:reference'}, validators.headers.validate, validators.identity.validateAccessToken,
-//    validators.noderegistry.validateReference, validators.dataframebody.validateBody, controllers.message.sendMessages);
-
-
 server.get({path: "/version"}, controllers.version);
 server.get({path: "/healthcheck"}, controllers.healthcheck);
 
-server.post({path: "/test"}, function(req, res){
-    console.info("call /test");
-
-    var pool = database.getConnection();
-    //var conn = pool.getConnection();
-    var post = {type: 'hrv', model: 'prisma1'};
-               
-    pool.insertRowsIntoTable([post],'Vehicle', ['type','model'], function (error, results, fields) {
-        if (error){
-            //todo
-            throw error;
-        }else{
-            console.log('The solution is: ', results);
-        }
-         
-        redis_connector.setCacheValue('myKeyGui', 123, function(err){
-            if(err)
-                throw error;
-        });
-            
-
-        var http_status = 200;
-        res.send(http_status, {
-            status: 35
-        });
-      });
-
-    
-});
+server.post({path: "/quote"}, validators.body.bodyValidate, controllers.quote.setQuote);
 
 function startServer () {
     var port = process.env.PORT || DEFAULT_HTTP_PORT;
