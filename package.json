@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "tape \"test/*-test.js\""
   },
   "repository": {
     "type": "git",
@@ -14,6 +14,7 @@
   "dependencies": {
     "dotenv-extended": "^2.0.1",
     "helmet": "^3.12.0",
+    "lodash": "^4.17.5",
     "mysql": "^2.15.0",
     "q": "^1.5.1",
     "redis": "^2.8.0",
@@ -25,5 +26,9 @@
   "bugs": {
     "url": "https://github.com/guilhermemalfatti/api-car-insurance/issues"
   },
-  "homepage": "https://github.com/guilhermemalfatti/api-car-insurance/blob/master/README.md"
+  "homepage": "https://github.com/guilhermemalfatti/api-car-insurance/blob/master/README.md",
+  "devDependencies": {
+    "istanbul": "^0.4.5",
+    "tape": "^4.9.0"
+  }
 }

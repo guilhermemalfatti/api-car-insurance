@@ -1,4 +1,3 @@
-var pjson = require('../package.json');
 var database = require('../util/database.js');
 var responseBuilder = require("../util/responseBuilder");
 
@@ -15,17 +14,9 @@ module.exports.setQuote = function(req, res) {
             type: req.params.vehicle.type,
             manufacturingYear: req.params.vehicle.manufacturingYear,
             model: req.params.vehicle.model,
-            make: req.params.vehicle.make
+            make: req.params.vehicle.make//brand
             };
     var fields = ['SSN','name', 'gender', 'dateOfBirth', 'address', 'email', 'phoneNumber', 'type', 'manufacturingYear', 'model', 'make'];
-
-    /**
-     * get ssn
-     * if a ssn existe
-     *  update
-     * else
-     *  create
-     */
 
     pool.selectFromTable(['SSN', 'quoteId'], 'QuoteInformation', 'SSN = ' + post.SSN, function(error, results){
         if(error){
