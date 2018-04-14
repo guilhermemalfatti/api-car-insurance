@@ -1,0 +1,45 @@
+[
+    {
+        "modifier" : 1.5,
+        "rangeA": 16,
+        "rangeB": 24,
+        "gender": "male"
+    },
+    {
+        "modifier" : 1.2,
+        "rangeA": 25,
+        "rangeB": 35,
+        "gender": "male"
+    },
+    {
+        "modifier" : 1,
+        "rangeA": 35,
+        "rangeB": 60,
+        "gender": "male"
+    },
+    {
+        "modifier" : 1.3,
+        "rangeA": 60,
+        "rangeB": null,
+        "gender": "male"
+    },
+    {
+        "modifier" : 1.4,
+        "rangeA": 16,
+        "rangeB": 24,
+        "gender": "female"
+    },
+    {
+        "modifier" : 1,
+        "rangeA": 25,
+        "rangeB": 60,
+        "gender": "female"
+    },
+    {
+        "modifier" : 1.2,
+        "rangeA": 60,
+        "rangeB": null,
+        "gender": "female"
+    }
+    
+]

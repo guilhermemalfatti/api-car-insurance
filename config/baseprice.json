@@ -1,0 +1,67 @@
+[
+    {
+        "type": "car",    
+        "year": 2011,
+        "model": "Uno",
+        "make": "Fiat",
+        "incidentAVG": 10,
+        "baseprice": 2000
+    },
+    {
+        "type":  "car",  
+        "year": 2012,
+        "model": "Uno",
+        "make": "Fiat",
+        "incidentAVG": 11,
+        "baseprice": 3000
+    },
+    {
+        "type":  "car",  
+        "year": 2013,
+        "model": "Celta",
+        "make": "Chevrolet",
+        "incidentAVG": 5,
+        "baseprice": 2010
+    },
+    {
+        "type": "car",
+        "year": 2013,
+        "model": "Uno",
+        "make": "Fiat",
+        "incidentAVG": 10,
+        "baseprice": 3000
+    },
+    {
+        "type": "motorcycle",
+        "year": 2013,
+        "model": "k13000",
+        "make": "BMW",
+        "incidentAVG": 10,
+        "baseprice": 4000
+    },
+    
+    {
+        "type": "motorcycle",
+        "year": 2018,
+        "model": "k13000",
+        "make": "BMW",
+        "incidentAVG": 10,
+        "baseprice": 4800
+    },
+    {
+        "type": "truck",
+        "year": 2018,
+        "model": "1120",
+        "make": "Mercedes",
+        "incidentAVG": 10,
+        "baseprice": 8000
+    },
+    {
+        "type": "other",
+        "year": 2013,
+        "model": "unknown",
+        "make": "unknown",
+        "incidentAVG": 30,
+        "baseprice": 2500
+    }
+]
