@@ -1,6 +1,11 @@
 var restify = require('restify');
 var responseBuilder = require("./util/responseBuilder");
+var helmet = require('helmet');
+var database = require('./util/database.js');
+var Q = require('q');
+
 require('dotenv-extended').load()
+
 // Constants
 var DEFAULT_HTTP_PORT = 8080;
 
@@ -11,7 +16,7 @@ var server = restify.createServer({
 //server.use(restify.fullResponse());
 //server.use(restify.queryParser());
 server.use(restify.plugins.bodyParser({mapParams: true}));
-
+server.use(helmet());	
 // Controllers and validators
 var controllersPath = './controllers/';
 var controllers = {
@@ -35,6 +40,38 @@ var validators = {
 server.get({path: "/version"}, controllers.version);
 server.get({path: "/healthcheck"}, controllers.healthcheck);
 
+server.post({path: "/test"}, function(req, res){
+    console.info("call /test");
+
+    var pool = database.getConnection();
+    //var conn = pool.getConnection();
+    var post = {type: 'hrv', model: 'prisma1'};
+               
+    pool.insertRowsIntoTable([post],'Vehicle', ['type','model'], function (error, results, fields) {
+        if (error){
+            //todo
+            throw error;
+        }else{
+            console.log('The solution is: ', results);
+        }
+         
+            
+
+        var http_status = 200;
+        res.send(http_status, {
+            status: 35
+        });
+      });
+
+    
+});
+
+function setupDatabaseConnection() {
+    var deferred = Q.defer();
+    database.createConnection(deferred.makeNodeResolver());
+    return deferred.promise;
+}
+
 
 function startServer () {
     var port = process.env.PORT || DEFAULT_HTTP_PORT;
@@ -50,7 +87,6 @@ function startServer () {
     // Exception handling
     server.on('uncaughtException', function (req, res, route, err) {
         console.error('Uncaught Exception: ' + (err.stack || err));
-
         //todo file to export codes 500 ..
         responseBuilder.createErrorResponse(res, 500, 500, 'Internal Server Error.');        
     });
@@ -71,5 +107,24 @@ function startServer () {
         responseBuilder.createErrorResponse(res, 500, 500, 'Internal server error.');
     });
 }
+
+function setupServer(callback){
+    setupDatabaseConnection()
+        .then(function(){
+            return callback(null, 'Database');
+        })
+       .catch(function(error){
+           callback(error, 'DataBase');
+        });
+}
+
+setupServer(function(error, label){
+    if (error) {
+        console.info("Error on starting " + label);
+        console.error(error);
+    } else {
+        console.info(label + ' is up');
+    }
+});
 
 startServer();

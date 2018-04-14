@@ -1,7 +1,7 @@
 var pjson = require('../package.json');
 
 module.exports.getVersion = function(req, res) {
-    console.info('controllers.system.getVersion');
+    console.info('call controllers.system.getVersion');
     //TODO export a file with codes 200 ...
     var http_status = 200;
 
@@ -13,7 +13,7 @@ module.exports.getVersion = function(req, res) {
 };
 
 exports.getHealthcheck = function(req, res, next) {
-    console.info('controllers.system.getHealthcheck');
+    console.info('call controllers.system.getHealthcheck');
     //TODO
     var http_status = 200;
     res.send(http_status, {
