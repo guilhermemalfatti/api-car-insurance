@@ -12,6 +12,7 @@ module.exports = {
     Redis: {
         Host: process.env.REDIS_HOST,
         Port: process.env.REDIS_PORT,
-        Prefix: process.env.PREFIX
+        Prefix: process.env.PREFIX,
+        TTL: parseInt(process.env.CACHE_REDIS_TTL)
     }
 };

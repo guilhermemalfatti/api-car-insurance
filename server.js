@@ -3,6 +3,7 @@ var responseBuilder = require("./util/responseBuilder");
 var helmet = require('helmet');
 var database = require('./util/database.js');
 var Q = require('q');
+var redis_connector = require('./util/redis.js');
 
 require('dotenv-extended').load()
 
@@ -55,6 +56,10 @@ server.post({path: "/test"}, function(req, res){
             console.log('The solution is: ', results);
         }
          
+        redis_connector.setCacheValue('myKeyGui', 123, function(err){
+            if(err)
+                throw error;
+        });
             
 
         var http_status = 200;
@@ -65,13 +70,6 @@ server.post({path: "/test"}, function(req, res){
 
     
 });
-
-function setupDatabaseConnection() {
-    var deferred = Q.defer();
-    database.createConnection(deferred.makeNodeResolver());
-    return deferred.promise;
-}
-
 
 function startServer () {
     var port = process.env.PORT || DEFAULT_HTTP_PORT;
@@ -108,12 +106,29 @@ function startServer () {
     });
 }
 
+
+function setupDatabaseConnection() {
+    var deferred = Q.defer();
+    database.createConnection(deferred.makeNodeResolver());
+    return deferred.promise;
+}
+
+function setupCacheRedis() {
+    var deferred = Q.defer();
+    redis_connector.createCacheConnection(deferred.makeNodeResolver());
+    return deferred.promise;
+}
+
+
 function setupServer(callback){
-    setupDatabaseConnection()
-        .then(function(){
+    setupDatabaseConnection().then(function(){
+            setupCacheRedis().then(function(){
+                    return callback(null, 'Redis');
+                }).catch(function(){
+                    callback(error, 'Redis');
+                });
             return callback(null, 'Database');
-        })
-       .catch(function(error){
+        }).catch(function(error){
            callback(error, 'DataBase');
         });
 }
