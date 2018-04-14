@@ -31,11 +31,9 @@ var validators = {
     body: require(validatorsPath + 'validate.js')
 };
 
-// todo
-//server.pre(...);
-
 server.get({path: "/version"}, controllers.version);
 server.get({path: "/healthcheck"}, controllers.healthcheck);
+
 
 server.post({path: "/quote"}, validators.body.bodyValidate, controllers.quote.setQuote);
 

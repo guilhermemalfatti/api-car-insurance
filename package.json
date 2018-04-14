@@ -12,6 +12,7 @@
     "url": "git@github.com:guilhermemalfatti/api-car-insurance.git"
   },
   "dependencies": {
+    "age-calculator": "^1.0.0",
     "dotenv-extended": "^2.0.1",
     "helmet": "^3.12.0",
     "lodash": "^4.17.5",

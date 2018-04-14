@@ -2,6 +2,7 @@ var test = require('tape');
 var controller = require('../controllers/basePrice.js');
 
 test('Base price all fields', function(t){
+    t.plan(1);
     var basePrice = controller.calculate('other', 2013, 'unknown', 'unknown', 30);
     var expectedBasePrice = 2500;
 
@@ -10,6 +11,7 @@ test('Base price all fields', function(t){
 }); 
 
 test('Base price fields (Type+Year+Make+Model)', function(t){
+    t.plan(1);
     var basePrice = controller.calculate('motorcycle', 2013, 'k13000', 'BMW', 1);
     var expectedBasePrice = 4000;
 
@@ -18,6 +20,7 @@ test('Base price fields (Type+Year+Make+Model)', function(t){
 }); 
 
 test('Base price fields (Type+Year+Make)', function(t){
+    t.plan(1);
     var basePrice = controller.calculate('car', 2013, 'Uno', 'fiat', 22);
     var expectedBasePrice = 3000;
 
