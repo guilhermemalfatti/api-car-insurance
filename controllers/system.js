@@ -1,5 +1,5 @@
 var pjson = require('../package.json');
-var responseBuilder = require("../util/responseBuilder");
+var responseBuilder = require("../util/responseBuilder.js");
 
 module.exports.getVersion = function(req, res) {
     console.info('call controllers.system.getVersion');
@@ -17,5 +17,6 @@ module.exports.getVersion = function(req, res) {
 exports.getHealthcheck = function(req, res, next) {
     console.info('call controllers.system.getHealthcheck');
 
-    responseBuilder.createResponse(res, 200, 200, {staus: 1});
+    responseBuilder.createResponse(res, 200, 200, {status: 1});
+    
 };

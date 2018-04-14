@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "test": "tape \"test/*-test.js\""
+    "test": "tape \"test/*test.js\""
   },
   "repository": {
     "type": "git",
@@ -30,6 +30,7 @@
   "homepage": "https://github.com/guilhermemalfatti/api-car-insurance/blob/master/README.md",
   "devDependencies": {
     "istanbul": "^0.4.5",
+    "proxyquire": "^2.0.1",
     "tape": "^4.9.0"
   }
 }

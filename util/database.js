@@ -1,5 +1,3 @@
-'use strict';
-
 var MySQL = require('./mysql.js');
 var config = require("../config/config.js");
 var pool = null;

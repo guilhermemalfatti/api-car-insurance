@@ -23,7 +23,7 @@ MySQL.prototype.useConnection = function useConnection(next){
     });
 };
 
-MySQL.prototype.insertRowsIntoTable = function insertRowsIntoTable(insertRows, tableName, fields, callback) {
+MySQL.prototype.insertRows = function insertRows(insertRows, tableName, fields, callback) {
     var self = this;
     this.pool.getConnection(function (error, connection) {
         if (error) {

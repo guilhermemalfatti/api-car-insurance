@@ -154,18 +154,15 @@ RedisConnection.prototype.disconnect = function () {
     this.client = null;
 };
 
-// This function checks if connection is established, and connects if not connected
 RedisConnection.prototype.validateConnection = function (callback) {
     if (!this.client || !this.client.connected) {
         console.warn('Tried to access redis when client is NOT connected. Trying to reconnect now...');
         this.connect(this.host, this.port, callback);
     } else {
-        // Is already connected
         callback();
     }
 };
 
-// Now add same methods as the redis lib, but normalizing the key with the prefix
 RedisConnection.prototype.set = function (key, value, callback, ttlSeconds) {
     var self = this;
     this.validateConnection(function (err) {

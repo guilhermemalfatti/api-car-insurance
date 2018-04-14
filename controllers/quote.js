@@ -28,7 +28,7 @@ module.exports.retriveQuoteInformation = function(req, res){
     var fields = ['quoteId', 'SSN','name', 'gender', 'dateOfBirth', 'address', 'email', 'phoneNumber', 'type', 'manufacturingYear', 'model', 'make'];
     var quoteKey = 'quote-information-';
 
-    redisCache.getCacheValue(quoteKey + req.params.quoteId, undefined, function(err, results){
+    redisCache.getValue(quoteKey + req.params.quoteId, undefined, function(err, results){
         if(err){
             console.log("redis error: " + err.message);
         }else{
@@ -40,10 +40,10 @@ module.exports.retriveQuoteInformation = function(req, res){
                         responseBuilder.createErrorResponse(res, 500, 500, error.sqlMessage);
                     }else{
                         if(results.length > 0){
-                            redisCache.setCacheValue(quoteKey + req.params.quoteId, JSON.stringify(results[0]), function(){
+                            redisCache.setValue(quoteKey + req.params.quoteId, JSON.stringify(results[0]), function(){
                                 responseBuilder.createResponse(res, 200, 200, results[0]);
                             });                        
-                        }else{                        
+                        }else{
                             responseBuilder.createErrorResponse(res, 404, 200, 'Quote not found.');
                         }
                     }
@@ -84,7 +84,7 @@ module.exports.setQuote = function(req, res) {
                     }
                 })
             }else{
-                pool.insertRowsIntoTable([post],'QuoteInformation', fields, function (error, results) {
+                pool.insertRows([post],'QuoteInformation', fields, function (error, results) {
                     if (error){
                         responseBuilder.createErrorResponse(res, 500, 500, error.sqlMessage);
                     }else{
@@ -125,7 +125,7 @@ function performQuote(quoteid, quoteinfo){
                     }
                 })
             }else{
-                pool.insertRowsIntoTable([post],'QuoteCondition', fields, function (error, results) {
+                pool.insertRows([post],'QuoteCondition', fields, function (error, results) {
                     if (error){
                         console.error(error.sqlMessage)
                     }else{

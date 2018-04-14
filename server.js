@@ -83,7 +83,7 @@ function setupDatabaseConnection() {
 
 function setupCacheRedis() {
     var deferred = Q.defer();
-    redis_connector.createCacheConnection(deferred.makeNodeResolver());
+    redis_connector.createConnection(deferred.makeNodeResolver());
     return deferred.promise;
 }
 

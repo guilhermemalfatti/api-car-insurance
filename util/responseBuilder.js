@@ -11,7 +11,6 @@ module.exports.createResponse = function (response, status, httpStatus, body) {
     console.info('response Sent');
 };
 
-
 module.exports.createErrorResponse = function (response, status, httpStatus, message, reason) {
     console.trace('Sending Error response');
 

@@ -3,11 +3,7 @@ var config = require('../config/config.js');
 
 var cacheConnection = new redis.Connection();
 
-exports.checkCacheConnectionStatus = function () {
-    return cacheConnection && cacheConnection.client && cacheConnection.client.connected;
-};
-
-exports.createCacheConnection = function (callback) {
+exports.createConnection = function (callback) {
     try {
         cacheConnection.connect(config.Redis.Host, config.Redis.Port, function(err){
             callback(err);
@@ -18,7 +14,7 @@ exports.createCacheConnection = function (callback) {
     }
 };
 
-exports.setCacheValue = function (key, value, callback) {
+exports.setValue = function (key, value, callback) {
     var ttl = 1;
     if (!isNaN(config.Redis.TTL)) {
         ttl = config.Redis.TTL;
@@ -31,7 +27,7 @@ exports.setCacheValue = function (key, value, callback) {
     }, ttl);
 };
 
-exports.getCacheValue = function (key, default_value, callback) {
+exports.getValue = function (key, default_value, callback) {
     cacheConnection.get(config.Redis.Prefix + key, function(err, results) {
         if(err){
             console.error('Failed to set value at cache redis: ' + err);
