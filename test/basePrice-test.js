@@ -45,3 +45,12 @@ test('Base price fields (Type)', function(t){
     t.equal(basePrice, expectedBasePrice, 'Base price is: ' + basePrice + ' and should be: ' + expectedBasePrice);
     t.end();
 });
+ 
+test('Base price fields (default)', function(t){
+    t.plan(1);
+    var basePrice = controller.calculate('bus', 2011, '1120', 'mercedes', 12);
+    var expectedBasePrice = 1000;
+
+    t.equal(basePrice, expectedBasePrice, 'Base price is: ' + basePrice + ' and should be: ' + expectedBasePrice);
+    t.end();
+});

@@ -3,9 +3,10 @@ var responseBuilder = require("../util/responseBuilder");
 var baseprice =require('./baseprice.js');
 var customerModifier = require('./customerModifier.js');
 let {AgeFromDateString, AgeFromDate} = require('age-calculator');
+var redisCache = require('../util/redis.js');
 
-module.exports.retriveQuote = function(req, res){
-    console.info('call controllers.quote.retriveQuote');
+module.exports.retriveQuoteStatus = function(req, res){
+    console.info('call controllers.quote.retriveQuoteStatus');
     var pool = database.getConnection();
     pool.selectFromTable(['quoteId', 'status', 'price'], 'QuoteCondition', 'quoteId = ' + req.params.quoteId, function(error, results){
         if(error){
@@ -14,8 +15,40 @@ module.exports.retriveQuote = function(req, res){
             if(results.length > 0){
                 responseBuilder.createResponse(res, 200, 200, {quote: results[0]});
             }else{
-                responseBuilder.createErrorResponse(res, 404, 404, 'Not found.');
+                responseBuilder.createErrorResponse(res, 404, 200, 'Quote not found.');
             }
+        }
+    });
+}
+
+
+module.exports.retriveQuoteInformation = function(req, res){
+    console.info('call controllers.quote.retriveQuoteInformation');
+    var pool = database.getConnection();
+    var fields = ['quoteId', 'SSN','name', 'gender', 'dateOfBirth', 'address', 'email', 'phoneNumber', 'type', 'manufacturingYear', 'model', 'make'];
+    var quoteKey = 'quote-information-';
+
+    redisCache.getCacheValue(quoteKey + req.params.quoteId, undefined, function(err, results){
+        if(err){
+            console.log("redis error: " + err.message);
+        }else{
+            if(results){
+                responseBuilder.createResponse(res, 200, 200, JSON.parse(results));
+            }else{
+                pool.selectFromTable(fields, 'QuoteInformation', 'quoteId = ' + req.params.quoteId, function(error, results){
+                    if(error){
+                        responseBuilder.createErrorResponse(res, 500, 500, error.sqlMessage);
+                    }else{
+                        if(results.length > 0){
+                            redisCache.setCacheValue(quoteKey + req.params.quoteId, JSON.stringify(results[0]), function(){
+                                responseBuilder.createResponse(res, 200, 200, results[0]);
+                            });                        
+                        }else{                        
+                            responseBuilder.createErrorResponse(res, 404, 200, 'Quote not found.');
+                        }
+                    }
+                });
+            }            
         }
     });
 }

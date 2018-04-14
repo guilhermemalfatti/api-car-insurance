@@ -14,6 +14,7 @@ var DEFAULT_HTTP_PORT = 8080;
 var server = restify.createServer({
     name: 'Car Insurance'
 });
+
 //server.use(restify.fullResponse());
 //server.use(restify.queryParser());
 server.use(restify.plugins.bodyParser({mapParams: true}));
@@ -34,7 +35,8 @@ var validators = {
 server.get({path: "/version"}, controllers.version);
 server.get({path: "/healthcheck"}, controllers.healthcheck);
 
-server.get({path: "/quotestatus/:quoteId"}, controllers.quote.retriveQuote);
+server.get({path: "/quoteStatus/:quoteId"}, controllers.quote.retriveQuoteStatus);
+server.get({path: "/quoteInformation/:quoteId"}, controllers.quote.retriveQuoteInformation);
 
 server.post({path: "/quote"}, validators.body.bodyValidate, controllers.quote.setQuote);
 
@@ -52,7 +54,7 @@ function startServer () {
     // Exception handling
     server.on('uncaughtException', function (req, res, route, err) {
         console.error('Uncaught Exception: ' + (err.stack || err));
-        //todo file to export codes 500 ..
+        //todo file to export codes: 500 ..
         responseBuilder.createErrorResponse(res, 500, 500, 'Internal Server Error.');        
     });
 
@@ -73,7 +75,6 @@ function startServer () {
     });
 }
 
-
 function setupDatabaseConnection() {
     var deferred = Q.defer();
     database.createConnection(deferred.makeNodeResolver());
@@ -85,7 +86,6 @@ function setupCacheRedis() {
     redis_connector.createCacheConnection(deferred.makeNodeResolver());
     return deferred.promise;
 }
-
 
 function setupServer(callback){
     setupDatabaseConnection().then(function(){
