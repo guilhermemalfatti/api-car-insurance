@@ -34,6 +34,7 @@ var validators = {
 server.get({path: "/version"}, controllers.version);
 server.get({path: "/healthcheck"}, controllers.healthcheck);
 
+server.get({path: "/quotestatus/:quoteId"}, controllers.quote.retriveQuote);
 
 server.post({path: "/quote"}, validators.body.bodyValidate, controllers.quote.setQuote);
 

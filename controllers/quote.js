@@ -4,6 +4,22 @@ var baseprice =require('./baseprice.js');
 var customerModifier = require('./customerModifier.js');
 let {AgeFromDateString, AgeFromDate} = require('age-calculator');
 
+module.exports.retriveQuote = function(req, res){
+    console.info('call controllers.quote.retriveQuote');
+    var pool = database.getConnection();
+    pool.selectFromTable(['quoteId', 'status', 'price'], 'QuoteCondition', 'quoteId = ' + req.params.quoteId, function(error, results){
+        if(error){
+            responseBuilder.createErrorResponse(res, 500, 500, error.sqlMessage);
+        }else{
+            if(results.length > 0){
+                responseBuilder.createResponse(res, 200, 200, {quote: results[0]});
+            }else{
+                responseBuilder.createErrorResponse(res, 404, 404, 'Not found.');
+            }
+        }
+    });
+}
+
 module.exports.setQuote = function(req, res) {
     console.info('call controllers.quote.setQuote');
     var pool = database.getConnection();
