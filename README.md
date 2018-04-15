@@ -40,8 +40,6 @@ If everything when fine, you should run
 
 #### Node installation on Linux
 
-    sudo apt-get install python-software-properties
-    sudo add-apt-repository ppa:chris-lea/node.js
     sudo apt-get update
     sudo apt-get install nodejs
 
@@ -63,6 +61,23 @@ Also, be sure to have `git` available in your PATH, `npm` might need it.
 Edit `.env` with the url where you have setup:
 - Mysql DB
 - Redis Cache
+
+    ```
+    #port
+    PORT=3978
+
+    #DB
+    DB_HOSTNAME='127.0.0.1'
+    DB_USERNAME='admin'
+    DB_PASSWORD='admin'
+    DB_DATABASE='api-car-insurance-db'
+
+    #Redis
+    REDIS_HOST="127.0.0.1"
+    REDIS_PORT=6379
+    PREFIX="car-insurance-"
+    CACHE_REDIS_TTL=60
+    ```
 
 ## Running the tests
 
@@ -101,6 +116,17 @@ This GET retrieve a quote status. This resource is not cacheable, and return the
 This GET retrieve the quote information. This resource is cacheable, return all the data posted by the user of the API on the initial call.
 
     curl -X GET http://localhost:3978/quoteInformation/2
+
+    0.017
+    0.002
+    0.002
+    0.002
+    0.002
+    0.001
+    0.002
+    0.003
+    0.002
+    0.004
 
     {"quoteId":2,"SSN":123,"name":"Guilherme","gender":"male","dateOfBirth":"1990-12-17T02:00:00.000Z","address":"rua 7 de novembro","email":"email@emailcom","phoneNumber":99745321,"type":"car","manufacturingYear":2000,"model":"celta","make":"Chevrolet"}
 
