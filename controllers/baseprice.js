@@ -1,7 +1,7 @@
 var _ = require('lodash');
 const DEFAULT_VALUE = 1000
 module.exports.calculate = function(type ,year, model, make, incident) {
-    var basePrices = require('../config/basePrice.json');
+    var basePrices = require('../config/baseprice.json');
     var price = {
         value: null,
         priority: null

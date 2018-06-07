@@ -1,6 +1,6 @@
 var database = require('../util/database.js');
 var responseBuilder = require("../util/responseBuilder");
-var baseprice =require('./baseprice.js');
+var baseprice =require('./baseprice');
 var customerModifier = require('./customerModifier.js');
 let {AgeFromDateString, AgeFromDate} = require('age-calculator');
 var redisCache = require('../util/redis.js');

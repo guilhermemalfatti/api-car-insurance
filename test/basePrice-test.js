@@ -1,5 +1,5 @@
 var test = require('tape');
-var controller = require('../controllers/basePrice.js');
+var controller = require('../controllers/baseprice.js');
 
 test('Base price all fields', function(t){
     t.plan(1);
